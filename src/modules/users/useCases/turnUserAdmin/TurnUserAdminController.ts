@@ -1,12 +1,17 @@
-import { Request, Response } from "express";
+/* eslint-disable prettier/prettier */
+import { Request, Response } from 'express';
 
-import { TurnUserAdminUseCase } from "./TurnUserAdminUseCase";
+import { TurnUserAdminUseCase } from './TurnUserAdminUseCase';
 
 class TurnUserAdminController {
   constructor(private turnUserAdminUseCase: TurnUserAdminUseCase) {}
 
   handle(request: Request, response: Response): Response {
-    // Complete aqui
+    const { user_id } = request.params;
+
+    const userAdmin = this.turnUserAdminUseCase.execute({ user_id });
+
+    return response.status(200).json(userAdmin);
   }
 }
 

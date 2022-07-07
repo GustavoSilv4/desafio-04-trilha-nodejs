@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 /* eslint-disable prettier/prettier */
 import { Request, Response } from 'express';
 
@@ -9,9 +10,14 @@ class ListAllUsersController {
   handle(request: Request, response: Response): Response {
     const { user_id } = request.headers;
 
-    const listUsers = this.listAllUsersUseCase.execute({ user_id });
-
-    return response.status(200).json(listUsers);
+    try {
+      const listUsers = this.listAllUsersUseCase.execute({ user_id });
+      return response.status(200).json(listUsers);
+    } catch (error) {
+      if (error) {
+        return response.status(400).json({ error: error.message });
+      }
+    }
   }
 }
 

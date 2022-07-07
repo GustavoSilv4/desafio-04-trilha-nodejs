@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 /* eslint-disable prettier/prettier */
 import { Request, Response } from 'express';
 
@@ -9,9 +10,15 @@ class TurnUserAdminController {
   handle(request: Request, response: Response): Response {
     const { user_id } = request.params;
 
-    const userAdmin = this.turnUserAdminUseCase.execute({ user_id });
+    try {
+      const userAdmin = this.turnUserAdminUseCase.execute({ user_id });
 
-    return response.status(200).json(userAdmin);
+      return response.status(200).json(userAdmin);
+    } catch (error) {
+      if (error) {
+        return response.status(404).json({ error: error.message });
+      }
+    }
   }
 }
 

@@ -12,6 +12,10 @@ class ShowUserProfileByEmailUseCase {
   execute({ email }: IRequest): User {
     const user = this.usersRepository.findByEmail(email);
 
+    if (!user) {
+      throw new Error(`User [${email}] not found`);
+    }
+
     return user;
   }
 }

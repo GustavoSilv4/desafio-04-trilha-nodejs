@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 /* eslint-disable prettier/prettier */
 import { Response, Request } from 'express';
 
@@ -9,9 +10,15 @@ class CreateUserController {
   handle(request: Request, response: Response): Response {
     const { name, email } = request.body;
 
-    const userCreated = this.createUserUseCase.execute({ name, email });
+    try {
+      const userCreated = this.createUserUseCase.execute({ name, email });
 
-    return response.status(201).json({ userCreated });
+      return response.status(201).json(userCreated);
+    } catch (error) {
+      if (error) {
+        return response.status(400).json({ error: error.message });
+      }
+    }
   }
 }
 

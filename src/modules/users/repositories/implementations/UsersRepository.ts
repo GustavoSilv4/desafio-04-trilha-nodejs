@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 /* eslint-disable prettier/prettier */
 import { User } from '../../model/User';
 import { IUsersRepository, ICreateUserDTO } from '../IUsersRepository';
@@ -40,7 +41,9 @@ class UsersRepository implements IUsersRepository {
   }
 
   findByEmail(email: string): User | undefined {
-    // Complete aqui
+    const user = this.users.find((user) => user.email === email);
+
+    return user;
   }
 
   turnAdmin(receivedUser: User): User {
